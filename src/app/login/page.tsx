@@ -46,20 +46,21 @@ const login = () => {
         name,
         password,
       });
-      if (data.data === null) {
+      if (data.data.status === 404 ) {
         setError("No such user");
         setStatus("error");
         setNotify(true);
         setSubmitted(false);
-      } else if (!(password == data.data.password)) {
+      } else if (data.data.status === 400 ) {
         setError("Wrong Password");
         setStatus("error");
         setNotify(true);
         setSubmitted(false);
-      } else {
+      } else if (data.data.status === 200 ){
         setError("Logged In");
         setStatus("sucess");
         setNotify(true);
+        localStorage.setItem("user",name)
       }
     }
   };
@@ -122,5 +123,4 @@ const login = () => {
     </>
   );
 };
-
 export default login;
